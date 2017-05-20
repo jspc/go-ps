@@ -5,12 +5,23 @@ package ps
 import (
 	"fmt"
 	"io/ioutil"
+	"path/filepath"
+	"strconv"
 	"strings"
 )
 
 // Refresh reloads all the data associated with this process.
 func (p *UnixProcess) Refresh() error {
-	statPath := fmt.Sprintf("/proc/%d/stat", p.pid)
+	procPath := filepath.Join("/proc", strconv.Itoa(p.pid))
+
+	argsPath := filepath.Join(procPath, "cmdline")
+	argsBytes, err := ioutil.ReadFile(argsPath)
+	if err != nil {
+		return err
+	}
+	p.args = strings.Split(string(argsBytes), " ")
+
+	statPath := filepath.Join(procPath, "stat")
 	dataBytes, err := ioutil.ReadFile(statPath)
 	if err != nil {
 		return err

@@ -27,6 +27,11 @@ func (p *DarwinProcess) Executable() string {
 	return p.binary
 }
 
+func (p *DarwinProcess) Args() []string {
+	// TODO
+	return []string{}
+}
+
 func findProcess(pid int) (Process, error) {
 	ps, err := processes()
 	if err != nil {

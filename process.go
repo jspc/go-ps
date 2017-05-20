@@ -19,6 +19,9 @@ type Process interface {
 	// Executable name running this process. This is not a path to the
 	// executable.
 	Executable() string
+
+	// Argv map of the process
+	Args() []string
 }
 
 // Processes returns all processes.

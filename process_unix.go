@@ -19,6 +19,7 @@ type UnixProcess struct {
 	sid   int
 
 	binary string
+	args   []string
 }
 
 func (p *UnixProcess) Pid() int {
@@ -31,6 +32,10 @@ func (p *UnixProcess) PPid() int {
 
 func (p *UnixProcess) Executable() string {
 	return p.binary
+}
+
+func (p *UnixProcess) Args() []string {
+	return p.args
 }
 
 func findProcess(pid int) (Process, error) {
